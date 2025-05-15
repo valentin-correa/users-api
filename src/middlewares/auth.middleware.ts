@@ -13,6 +13,7 @@ import { UsersService } from 'src/users/users.service';
 import { Permissions } from './decorators/permissions.decorator';
 import { ForbiddenException } from '@nestjs/common';
 
+
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -33,7 +34,10 @@ export class AuthGuard implements CanActivate {
       //AGREGAR LOGICA PARA USAR LOS PERMISOS QUE VIENEN EN EL DECORADOR
       const permissions = this.reflector.get(Permissions, context.getHandler());
       const hasPermission = permissions.every(permission => user.permissionCodes.includes(permission));
-      return hasPermission? true : throw new ForbiddenException('Not enough permissions');
+      if (hasPermission == false){
+        throw new ForbiddenException('Not enough permissions');
+      }
+      return true;
     } catch (error) {
       throw new UnauthorizedException(error?.message);
     }
