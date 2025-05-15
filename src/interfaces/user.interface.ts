@@ -1,5 +1,7 @@
+import { RoleEntity } from "src/entities/role.entity";
+
 export interface UserI {
   email: string;
   password: string;
-  permissionCodes: string[];
+  role: RoleEntity[];
 }
