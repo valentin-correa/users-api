@@ -12,6 +12,6 @@ export class UserEntity extends BaseEntity implements UserI {
   password: string;
 
   get permissionCodes() {
-    return ['create-users', 'list-products'];
+   return this.role.permissions.map(p=>p.nombre)
   }
 }
