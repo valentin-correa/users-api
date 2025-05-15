@@ -11,6 +11,7 @@ import { RequestWithUser } from 'src/interfaces/request-user';
 import { JwtService } from 'src/jwt/jwt.service';
 import { UsersService } from 'src/users/users.service';
 import { Permissions } from './decorators/permissions.decorator';
+import { ForbiddenException } from '@nestjs/common';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -31,8 +32,8 @@ export class AuthGuard implements CanActivate {
       request.user = user;
       //AGREGAR LOGICA PARA USAR LOS PERMISOS QUE VIENEN EN EL DECORADOR
       const permissions = this.reflector.get(Permissions, context.getHandler());
-      console.log(permissions)
-      return true;
+      const hasPermission = permissions.every(permission => user.permissionCodes.includes(permission));
+      return hasPermission? true : throw new ForbiddenException('Not enough permissions');
     } catch (error) {
       throw new UnauthorizedException(error?.message);
     }
