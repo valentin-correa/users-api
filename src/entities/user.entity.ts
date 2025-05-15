@@ -1,17 +1,19 @@
 import { UserI } from '../interfaces/user.interface';
-import { BaseEntity, Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { RoleEntity } from './role.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity implements UserI {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Index({unique:true})
   @Column()
   email: string;
+
   @Column()
   password: string;
-
-  get permissionCodes() {
-    return ['create-users', 'list-products'];
-  }
+  
+  @ManyToOne(() => RoleEntity, role => role.users)
+  role: RoleEntity;
 }
