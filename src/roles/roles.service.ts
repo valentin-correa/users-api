@@ -10,4 +10,6 @@ export class RolesService {
     constructor(@InjectRepository(RoleEntity) private roleRepository: Repository<RoleEntity>,
                 private readonly permissionsService: PermissionsService
             ) {}
+
+    canDo(role:RoleEntity, )
 }

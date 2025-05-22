@@ -10,12 +10,16 @@ import { UserEntity } from '../entities/user.entity';
 import { hashSync, compareSync } from 'bcrypt';
 import { JwtService } from 'src/jwt/jwt.service';
 import * as dayjs from 'dayjs';
+import { RolesService } from 'src/roles/roles.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  repository = UserEntity;
-  constructor(private jwtService: JwtService) {}
-
+  constructor(private jwtService: JwtService,
+      @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
+                private readonly rolesService: RolesService
+            ) {}
   async refreshToken(refreshToken: string) {
     return this.jwtService.refreshToken(refreshToken);
   }
