@@ -14,7 +14,16 @@ export class RolesService {
     hasPermission(role:RoleEntity, permission:string){
         return role.permissions.some(p => p.name === permission)
     }
+
     async create(name:string):Promise<RoleEntity>{
             return await this.roleRepository.save({name});
     }
+
+    async assignPermission(roleName: string, permissionsNames: string[]): Promise<RoleEntity> {
+        const role = await this.roleRepository.findOne({where : {name: roleName}})
+        const permissions = await this.permissionsService.findPermissionsByNames(permissionsNames)
+        role.permissions = role.permissions.concat(permissions)
+        return await this.roleRepository.save(role)
+    }
+
 }
