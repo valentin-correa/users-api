@@ -24,8 +24,7 @@ export class UsersService {
     return this.jwtService.refreshToken(refreshToken);
   }
   canDo(user: UserI, permission: string): boolean {
-    const result = user.permissionCodes.includes(permission);
-    if (!result) {
+    if (!this.rolesService.hasPermission(user.role,permission)) {
       throw new UnauthorizedException();
     }
     return true;
@@ -36,7 +35,7 @@ export class UsersService {
       const user = new UserEntity();
       Object.assign(user, body);
       user.password = hashSync(user.password, 10);
-      await this.repository.save(user);
+      await this.userRepository.save(user);
       return { status: 'created' };
     } catch (error) {
       throw new HttpException('Error de creacion', 500);
@@ -61,6 +60,6 @@ export class UsersService {
     };
   }
   async findByEmail(email: string): Promise<UserEntity> {
-    return await this.repository.findOneBy({ email });
+    return await this.userRepository.findOneBy({ email });
   }
 }
