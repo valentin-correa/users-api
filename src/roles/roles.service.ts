@@ -14,4 +14,7 @@ export class RolesService {
     hasPermission(role:RoleEntity, permission:string){
         return role.permissions.some(p => p.name === permission)
     }
+    async create(name:string):Promise<RoleEntity>{
+            return await this.roleRepository.save({name});
+    }
 }
