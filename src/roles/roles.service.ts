@@ -10,4 +10,8 @@ export class RolesService {
     constructor(@InjectRepository(RoleEntity) private roleRepository: Repository<RoleEntity>,
                 private readonly permissionsService: PermissionsService
             ) {}
+
+    hasPermission(role:RoleEntity, permission:string){
+        return role.permissions.some(p => p.name === permission)
+    }
 }
