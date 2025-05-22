@@ -6,6 +6,10 @@ import { AuthGuard } from './middlewares/auth.middleware';
 import { JwtService } from './jwt/jwt.service';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
+import { RolesController } from './roles/roles.controller';
+import { PermissionsController } from './permissions/permissions.controller';
+import { PermissionsService } from './permissions/permissions.service';
+import { RolesService } from './roles/roles.service';
 
 @Module({
   imports: [
@@ -17,7 +21,7 @@ import { UsersService } from './users/users.service';
     }),
     TypeOrmModule.forFeature(entities),
   ],
-  controllers: [AppController,UsersController],
-  providers: [AuthGuard, JwtService, UsersService],
+  controllers: [AppController,UsersController, RolesController, PermissionsController],
+  providers: [AuthGuard, JwtService, UsersService, PermissionsService, RolesService],
 })
 export class AppModule {}
