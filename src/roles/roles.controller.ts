@@ -1,7 +1,9 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { AuthGuard } from 'src/middlewares/auth.middleware';
 import { Permissions } from 'src/middlewares/decorators/permissions.decorator';
+import { permission } from 'process';
+import { AssignPermissionsDto, CreateRoleDto } from './rolesDto';
 
 @Controller('roles')
 export class RolesController {
@@ -11,7 +13,13 @@ export class RolesController {
       @UseGuards(AuthGuard)
       @Permissions(['create-role'])
       @Post()
-      async createRole(@Body() name: string) {
-        return await this.rolesService.create(name)
+      async createRole(@Body() role: CreateRoleDto) {
+        return await this.rolesService.create(role)
+      }
+
+      @UseGuards(AuthGuard)
+      @Permissions(['assign-permission'])
+      @Put('/:name/assignPermissions')
+      async assignPermissions(@Param('name') name:string, @Body() permissions:AssignPermissionsDto){
       }
 }
