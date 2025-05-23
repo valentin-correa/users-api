@@ -16,10 +16,10 @@ export class RolesController {
       async createRole(@Body() role: CreateRoleDto) {
         return await this.rolesService.create(role)
       }
+
       @UseGuards(AuthGuard)
       @Permissions(['assign-permission'])
-      @Put('/:name/asignPermissions')
+      @Put('/:name/assignPermissions')
       async assignPermissions(@Param('name') name:string, @Body() permissions:AssignPermissionsDto){
-        
       }
 }
