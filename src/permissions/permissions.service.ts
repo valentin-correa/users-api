@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PermissionEntity } from 'src/entities/permission.entity';
 import { Repository, In } from 'typeorm';
+import { CreatePermissionDto } from './permissionsDto';
 
 @Injectable()
 export class PermissionsService {
@@ -10,6 +11,11 @@ export class PermissionsService {
                 ) {}
     async findPermissionsByNames(permissionNames: string[]): Promise<PermissionEntity[]> {
         return await this.repository.find({ where: { name: In(permissionNames), },
-    });
-}
+        });
+    }
+
+    async createPermission(permission: CreatePermissionDto): Promise<PermissionEntity> {
+        return await this.repository.save(permission)
+    }
+
 }
