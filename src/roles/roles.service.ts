@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { RoleEntity } from 'src/entities/role.entity';
 import { PermissionsService } from 'src/permissions/permissions.service';
 import { Repository } from 'typeorm';
-import { AssignPermissionsDto } from './rolesDto';
+import { AssignPermissionsDto, CreateRoleDto } from './rolesDto';
 
 @Injectable()
 export class RolesService {
@@ -16,8 +16,8 @@ export class RolesService {
         return role.permissions.some(p => p.name === permission)
     }
 
-    async create(name:string):Promise<RoleEntity>{
-            return await this.roleRepository.save({name});
+    async create(role: CreateRoleDto):Promise<RoleEntity>{
+        return await this.roleRepository.save(role);
     }
 
     async assignNewPermissions(roleName: string, permissionsNames: AssignPermissionsDto): Promise<RoleEntity> { // Asigna nuevos permisos.
