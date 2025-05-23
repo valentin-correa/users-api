@@ -19,8 +19,8 @@ export class RolesController {
 
       @UseGuards(AuthGuard)
       @Permissions(['assign-permission'])
-      @Put('/:name/assignPermissions')
+      @Put(':name/assignPermissions') // Este método va a asignarle nuevos permisos al rol. Si quisiera modificar los que tiene, debería usar assignPermissions.
       async assignPermissions(@Param('name') name:string, @Body() permissions:AssignPermissionsDto){
-        return this.rolesService.assignPermission(name, permission)
+        return this.rolesService.assignNewPermissions(name, permissions)
       }
 }

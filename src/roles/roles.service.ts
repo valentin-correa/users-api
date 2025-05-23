@@ -20,10 +20,17 @@ export class RolesService {
             return await this.roleRepository.save({name});
     }
 
-    async assignPermission(roleName: string, permissionsNames: AssignPermissionsDto): Promise<RoleEntity> {
+    async assignNewPermissions(roleName: string, permissionsNames: AssignPermissionsDto): Promise<RoleEntity> { // Asigna nuevos permisos.
         const role = await this.findRoleByName(roleName)
         const permissions = await this.permissionsService.findPermissionsByNames(permissionsNames.permissions)
         role.permissions = role.permissions.concat(permissions)
+        return await this.roleRepository.save(role)
+    }
+
+        async assignPermissions(roleName: string, permissionsNames: AssignPermissionsDto): Promise<RoleEntity> { // Modifica los permisos que tiene.
+        const role = await this.findRoleByName(roleName)
+        const permissions = await this.permissionsService.findPermissionsByNames(permissionsNames.permissions)
+        role.permissions = permissions
         return await this.roleRepository.save(role)
     }
 
