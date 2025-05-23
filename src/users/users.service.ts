@@ -13,6 +13,8 @@ import * as dayjs from 'dayjs';
 import { RolesService } from 'src/roles/roles.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AssignRoleDto } from './user.Dto';
+import { retry } from 'rxjs';
 
 @Injectable()
 export class UsersService {
@@ -61,5 +63,12 @@ export class UsersService {
   }
   async findByEmail(email: string): Promise<UserEntity> {
     return await this.userRepository.findOneBy({ email });
+  }
+
+  async assignRole(id: number,assignRoleDto: AssignRoleDto){
+    const user = await this.userRepository.findOne({ where: {id} })
+    const role = await this.rolesService.find(assignRoleDto.roleName)
+    user.role = role
+    return await this.userRepository.save(user)
   }
 }
