@@ -21,13 +21,13 @@ export class RolesService {
     }
 
     async assignPermission(roleName: string, permissionsNames: AssignPermissionsDto): Promise<RoleEntity> {
-        const role = await this.find(roleName)
+        const role = await this.findRoleByName(roleName)
         const permissions = await this.permissionsService.findPermissionsByNames(permissionsNames.permissions)
         role.permissions = role.permissions.concat(permissions)
         return await this.roleRepository.save(role)
     }
 
-    async find(name: string): Promise<RoleEntity> {
+    async findRoleByName(name: string): Promise<RoleEntity> {
         return await this.roleRepository.findOne({where : {name: name}})
     }
 

@@ -67,7 +67,7 @@ export class UsersService {
 
   async assignRole(id: number,assignRoleDto: AssignRoleDto){
     const user = await this.userRepository.findOne({ where: {id} })
-    const role = await this.rolesService.find(assignRoleDto.roleName)
+    const role = await this.rolesService.findRoleByName(assignRoleDto.roleName)
     user.role = role
     return await this.userRepository.save(user)
   }
