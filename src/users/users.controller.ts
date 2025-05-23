@@ -13,6 +13,7 @@ import { RegisterDTO } from '../interfaces/register.dto';
 import { Request } from 'express';
 import { AuthGuard } from '../middlewares/auth.middleware';
 import { RequestWithUser } from 'src/interfaces/request-user';
+import { AssignRoleDto } from './user.Dto';
 
 @Controller('')
 export class UsersController {
@@ -50,5 +51,11 @@ export class UsersController {
     return this.service.refreshToken(
       request.headers['refresh-token'] as string,
     );
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('/:id/assignRole')
+  async assignRole(@Param('id') id : number, @Body() assignRoleDto : AssignRoleDto){
+    return this.service.assignRole(id, assignRoleDto)
   }
 }
