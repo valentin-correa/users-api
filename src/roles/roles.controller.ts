@@ -21,5 +21,6 @@ export class RolesController {
       @Permissions(['assign-permission'])
       @Put('/:name/assignPermissions')
       async assignPermissions(@Param('name') name:string, @Body() permissions:AssignPermissionsDto){
+        return this.rolesService.assignPermission(name, permission)
       }
 }
