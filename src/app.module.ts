@@ -14,10 +14,14 @@ import { RolesService } from './roles/roles.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      database: 'db.sql',
-      entities,
-      type: 'sqlite',
-      synchronize: true,
+        type: 'postgres',
+        host: 'localhost',
+        database: 'postgres',
+        username: 'postgres',
+        password: 'postgres',
+        port: 5002,
+        synchronize: true,
+        entities,
     }),
     TypeOrmModule.forFeature(entities),
   ],
