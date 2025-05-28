@@ -16,10 +16,6 @@ export class RolesService {
         return role.permissions.some(p => p.name === permission)
     }
 
-    async create(role: CreateRoleDto):Promise<RoleEntity>{
-        return await this.roleRepository.save(role);
-    }
-
     async assignNewPermissions(roleName: string, permissionsNames: AssignPermissionsDto): Promise<RoleEntity> { // Asigna nuevos permisos.
         const role = await this.findRoleByName(roleName)
         const permissions = await this.permissionsService.findPermissionsByNames(permissionsNames.permissions)
@@ -32,6 +28,9 @@ export class RolesService {
         const permissions = await this.permissionsService.findPermissionsByNames(permissionsNames.permissions)
         role.permissions = permissions
         return await this.roleRepository.save(role)
+    }
+    async create(role: CreateRoleDto):Promise<RoleEntity>{
+        return await this.roleRepository.save(role);
     }
 
     async findRoleByName(name: string): Promise<RoleEntity> {
