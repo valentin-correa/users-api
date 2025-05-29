@@ -38,6 +38,7 @@ export class UsersService {
       Object.assign(user, body);
       user.password = hashSync(user.password, 10);
       await this.userRepository.save(user);
+      await this.assignRole(user.id, { roleName : 'usuario' })
       return { status: 'created' };
     } catch (error) {
       throw new HttpException('Error de creacion', 500);
