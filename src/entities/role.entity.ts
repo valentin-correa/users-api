@@ -12,7 +12,7 @@ export class RoleEntity extends BaseEntity implements RoleI {
     @Column()
     name: string;
 
-    @ManyToMany(() => PermissionEntity, permission => permission.roles)
+    @ManyToMany(() => PermissionEntity, permission => permission.roles,{ eager: true })
     @JoinTable()
     permissions: PermissionEntity[];
 

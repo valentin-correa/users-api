@@ -14,6 +14,6 @@ export class UserEntity extends BaseEntity implements UserI {
   @Column()
   password: string;
   
-  @ManyToOne(() => RoleEntity, role => role.users)
+  @ManyToOne(() => RoleEntity, role => role.users,{ eager: true })
   role: RoleEntity;
 }

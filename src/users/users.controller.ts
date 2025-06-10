@@ -14,6 +14,8 @@ import { Request } from 'express';
 import { AuthGuard } from '../middlewares/auth.middleware';
 import { RequestWithUser } from 'src/interfaces/request-user';
 import { AssignRoleDto } from './user.Dto';
+import { Permissions } from 'src/middlewares/decorators/permissions.decorator'; 
+
 
 @Controller('')
 export class UsersController {
@@ -47,6 +49,7 @@ export class UsersController {
   }
 
   @Get('refresh-token')
+  @Permissions([])
   refreshToken(@Req() request: Request) {
     return this.service.refreshToken(
       request.headers['refresh-token'] as string,
@@ -54,6 +57,7 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard)
+  @Permissions(['assign-role'])
   @Post('/:id/assignRole')
   async assignRole(@Param('id') id : number, @Body() assignRoleDto : AssignRoleDto){
     return this.service.assignRole(id, assignRoleDto)
