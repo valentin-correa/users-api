@@ -1,9 +1,8 @@
-import { UserI } from '../interfaces/user.interface';
 import { BaseEntity, Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RoleEntity } from './role.entity';
 
 @Entity('users')
-export class UserEntity extends BaseEntity implements UserI {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

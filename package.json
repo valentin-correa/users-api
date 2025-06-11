@@ -28,6 +28,8 @@
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.13",
     "jsonwebtoken": "^9.0.2",
+    "nest": "^0.1.6",
+    "nest.js": "^1.0.8",
     "pg": "^8.16.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",

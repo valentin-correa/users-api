@@ -5,8 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Request } from 'express';
-import { UserEntity } from 'src/entities/user.entity';
 import { RequestWithUser } from 'src/interfaces/request-user';
 import { JwtService } from 'src/jwt/jwt.service';
 import { UsersService } from 'src/users/users.service';
@@ -31,7 +29,6 @@ export class AuthGuard implements CanActivate {
       const payload = this.jwtService.getPayload(token);
       const user = await this.usersService.findByEmail(payload.email);
       request.user = user;
-      //AGREGAR LOGICA PARA USAR LOS PERMISOS QUE VIENEN EN EL DECORADOR
       const permissions = this.reflector.get(Permissions, context.getHandler()) ?? [];
       const hasPermission = permissions.every(permission => this.usersService.canDo(user,permission));
       if (!hasPermission){

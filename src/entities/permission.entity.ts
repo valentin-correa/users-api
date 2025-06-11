@@ -3,7 +3,7 @@ import { RoleEntity } from "./role.entity";
 
 
 @Entity('permissions')
-export class PermissionEntity extends BaseEntity implements PermissionEntity {
+export class PermissionEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
     

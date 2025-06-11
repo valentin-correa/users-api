@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { LoginDTO } from 'src/interfaces/login.dto';
 import { RegisterDTO } from 'src/interfaces/register.dto';
-import { UserI } from 'src/interfaces/user.interface';
 import { UserEntity } from '../entities/user.entity';
 import { hashSync, compareSync } from 'bcrypt';
 import { JwtService } from 'src/jwt/jwt.service';
@@ -25,7 +24,7 @@ export class UsersService {
   async refreshToken(refreshToken: string) {
     return this.jwtService.refreshToken(refreshToken);
   }
-  canDo(user: UserI, permission: string): boolean {
+  canDo(user: UserEntity, permission: string): boolean {
     if (!this.rolesService.hasPermission(user.role,permission)) {
       throw new UnauthorizedException();
     }

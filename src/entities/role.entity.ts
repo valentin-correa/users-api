@@ -1,10 +1,9 @@
-import { RoleI } from "src/interfaces/role.interface";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Index, Column, ManyToMany, JoinTable, OneToMany  } from "typeorm";
 import { PermissionEntity } from "./permission.entity";
 import { UserEntity } from "./user.entity";
 
 @Entity('roles')
-export class RoleEntity extends BaseEntity implements RoleI {
+export class RoleEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
