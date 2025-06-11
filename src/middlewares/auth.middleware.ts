@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
       const user = await this.usersService.findByEmail(payload.email);
       request.user = user;
       //AGREGAR LOGICA PARA USAR LOS PERMISOS QUE VIENEN EN EL DECORADOR
-      const permissions = this.reflector.get(Permissions, context.getHandler());
+      const permissions = this.reflector.get(Permissions, context.getHandler()) ?? [];
       const hasPermission = permissions.every(permission => this.usersService.canDo(user,permission));
       if (!hasPermission){
         throw new ForbiddenException('Not enough permissions');
