@@ -40,7 +40,7 @@ export class UsersService {
       await this.assignRole(user.id, { roleName : 'user' })
       return { status: 'created' };
     } catch (error) {
-      throw new HttpException('Error de creacion', 500);
+      throw new HttpException('User creation failed', 500);
     }
   }
 
