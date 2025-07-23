@@ -18,14 +18,14 @@ import { retry } from 'rxjs';
 @Injectable()
 export class UsersService {
   constructor(private jwtService: JwtService,
-      @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
-                private readonly rolesService: RolesService
-            ) {}
+    @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
+    private readonly rolesService: RolesService
+  ) { }
   async refreshToken(refreshToken: string) {
     return this.jwtService.refreshToken(refreshToken);
   }
   canDo(user: UserEntity, permission: string): boolean {
-    if (!this.rolesService.hasPermission(user.role,permission)) {
+    if (!this.rolesService.hasPermission(user.role, permission)) {
       throw new UnauthorizedException();
     }
     return true;
@@ -37,7 +37,7 @@ export class UsersService {
       Object.assign(user, body);
       user.password = hashSync(user.password, 10);
       await this.userRepository.save(user);
-      await this.assignRole(user.id, { roleName : 'user' })
+      await this.assignRole(user.id, { roleName: 'user' }) //Por defecto se le pone el rol de usuario
       return { status: 'created' };
     } catch (error) {
       throw new HttpException('User creation failed', 500);
@@ -65,8 +65,8 @@ export class UsersService {
     return await this.userRepository.findOneBy({ email });
   }
 
-  async assignRole(id: number,assignRoleDto: AssignRoleDto){
-    const user = await this.userRepository.findOne({ where: {id} });
+  async assignRole(id: number, assignRoleDto: AssignRoleDto) {
+    const user = await this.userRepository.findOne({ where: { id } });
     const role = await this.rolesService.findRoleByName(assignRoleDto.roleName);
     user.role = role;
     return await this.userRepository.save(user)
