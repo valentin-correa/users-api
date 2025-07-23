@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { entities } from './entities';
 import { AuthGuard } from './middlewares/auth.middleware';
@@ -25,7 +24,7 @@ import { RolesService } from './roles/roles.service';
     }),
     TypeOrmModule.forFeature(entities),
   ],
-  controllers: [AppController,UsersController, RolesController, PermissionsController],
+  controllers: [UsersController, RolesController, PermissionsController],
   providers: [AuthGuard, JwtService, UsersService, PermissionsService, RolesService],
 })
 export class AppModule {}
