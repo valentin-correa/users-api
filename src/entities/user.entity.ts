@@ -6,6 +6,12 @@ export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  firstname: string;
+
+  @Column()
+  lastname: string;
+
   @Index({unique:true})
   @Column()
   email: string;
